@@ -1,359 +1,290 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>PICKLEBALL SCORE - ĐỨC TRỌNG</title>
+
 <style>
-  :root{
-    --bg: #f4f6f9;
-    --card: #fff;
-    --muted: #6b7280;
-    --teamA: #ff6b6b;
-    --teamB: #2ba6ff;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);-webkit-text-size-adjust:100%}
-  .app{max-width:980px;margin:14px auto;padding:12px}
-  header{display:flex;justify-content:space-between;align-items:center;gap:12px}
-  h1{margin:0;background:#083d9a;color:#fff;padding:10px 14px;border-radius:8px;font-size:18px}
-  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  select,input{padding:8px;border-radius:8px;border:1px solid #d7dde6}
-  .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
-  .btn.green{background:#00a850;color:#fff}
-  .layout{display:flex;gap:12px;margin-top:12px}
-  .left{width:360px;background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
-  .right{flex:1;background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
-  .teamBox{padding:10px;border-radius:8px;margin-bottom:10px;border-left:8px solid #ddd;background:#fbfbfb}
-  .teamA{border-left-color:var(--teamA)} .teamB{border-left-color:var(--teamB)}
-  .small{font-size:13px;color:var(--muted)}
-  .bigScore{font-size:28px;font-weight:900}
-  .courtWrap{display:flex;justify-content:center;align-items:center;padding:8px}
-  .court{width:540px;height:300px;background:#cfeed3;border:3px solid #2b4b2b;border-radius:8px;position:relative;display:flex;flex-direction:row;overflow:hidden}
-  .net{position:absolute;left:0;right:0;top:50%;height:4px;background:#333}
-  .kitchen.top{position:absolute;left:0;right:0;top:0;height:90px;background:rgba(255,200,200,0.35);border-bottom:2px dashed rgba(0,0,0,0.08)}
-  .kitchen.bottom{position:absolute;left:0;right:0;bottom:0;height:90px;background:rgba(255,200,200,0.35);border-top:2px dashed rgba(0,0,0,0.08)}
-  .side{width:50%;display:flex;flex-direction:column;justify-content:space-around;align-items:center;padding:8px}
-  .playerBox{width:160px;height:44px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;border:2px solid transparent;transition:transform .18s, box-shadow .18s}
-  .A{color:var(--teamA);border-color:rgba(255,107,107,0.15)}
-  .B{color:var(--teamB);border-color:rgba(43,166,255,0.15)}
-  .server{background:#ffecec;border-color:#ff3b3b !important;color:#9b0a0a; transform:scale(1.06); box-shadow:0 12px 28px rgba(0,0,0,0.12)}
-  .board{margin:12px auto;text-align:center}
-  .mainBoard{display:inline-block;background:#fff;padding:8px 14px;border-radius:8px;font-weight:900}
-  .controlsRow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  button.small{padding:8px 10px;border-radius:8px;border:0;cursor:pointer}
-  .muted{color:var(--muted);font-size:13px}
-  .flex-between{display:flex;justify-content:space-between;align-items:center}
-  @media (max-width:880px){.layout{flex-direction:column}.left{width:100%}.court{width:100%}}
-  input.small{padding:8px;border-radius:8px;border:1px solid #ddd}
+    body {
+        font-family: Arial;
+        margin: 0;
+        background: #e6f2ff;
+        padding: 10px;
+        user-select: none;
+    }
+    h2 {
+        text-align: center;
+        margin: 5px 0 10px 0;
+        color: #004a94;
+        text-shadow: 1px 1px 2px #999;
+    }
+    .config-box {
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 0 4px #aaa;
+        margin-bottom: 10px;
+    }
+    label { font-weight: bold; }
+    input, select { padding: 6px; width: 100%; margin-top: 4px; }
+
+    .court {
+        width: 100%;
+        max-width: 600px;
+        height: 260px;
+        background: #c8f7c5;
+        margin: auto;
+        position: relative;
+        border: 4px solid #006400;
+        display: flex;
+    }
+    .half {
+        width: 50%;
+        border-right: 2px solid #000;
+        position: relative;
+    }
+    .nvz {
+        position: absolute;
+        top: 35%;
+        height: 30%;
+        width: 100%;
+        background: rgba(255,165,0,0.25);
+        border-top: 2px dashed #ff8c00;
+        border-bottom: 2px dashed #ff8c00;
+    }
+    .player {
+        position: absolute;
+        width: 48%;
+        height: 48%;
+        background: #fff;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        font-weight: bold;
+        border: 2px solid black;
+    }
+
+    .teamA { border-color: #007bff; }
+    .teamB { border-color: #ff4757; }
+    .server { background: #ffb3b3 !important; border-color: red !important; }
+
+    /* A-side */
+    #A-right { left: 2%; top: 2%; }
+    #A-left  { left: 2%; bottom: 2%; }
+
+    /* B-side */
+    #B-right { right: 2%; top: 2%; }
+    #B-left  { right: 2%; bottom: 2%; }
+
+    .scoreboard {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .team-controls {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+    .team-box {
+        width: 48%;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 0 4px #aaa;
+    }
+    button {
+        width: 48%;
+        padding: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        background: #0088ff;
+        color: white;
+    }
+    .minus { background: #ff3b30; }
 </style>
 </head>
 <body>
-<div class="app">
-  <header>
-    <h1>PICKLEBALL SCORE - ĐỨC TRỌNG</h1>
-    <div class="controls">
-      <label class="small">Thang điểm</label>
-      <select id="pointType"><option value="11">11</option><option value="15">15</option></select>
 
-      <label class="small">Kiểu thắng</label>
-      <select id="winType"><option value="touch">Chạm</option><option value="by2">Cách 2</option></select>
+<h2>PICKLEBALL SCORE - ĐỨC TRỌNG</h2>
 
-      <label class="small">Đội giao đầu</label>
-      <select id="firstServe"><option value="A">Đội A</option><option value="B">Đội B</option></select>
+<div class="config-box">
+    <label>Tên đội A</label>
+    <input id="teamAName" value="Team A">
 
-      <button class="btn green" onclick="startMatch()">BẮT ĐẦU</button>
+    <label>VĐV A (phải - trái)</label>
+    <input id="A1" value="A-Right">
+    <input id="A2" value="A-Left">
+
+    <br><br>
+    <label>Tên đội B</label>
+    <input id="teamBName" value="Team B">
+
+    <label>VĐV B (phải - trái)</label>
+    <input id="B1" value="B-Right">
+    <input id="B2" value="B-Left">
+
+    <br><br>
+    <label>Thang điểm</label>
+    <select id="target">
+        <option value="11">11 điểm</option>
+        <option value="15">15 điểm</option>
+    </select>
+
+    <label>Cách thắng</label>
+    <select id="mode">
+        <option value="touch">Chạm điểm</option>
+        <option value="winBy2">Cách 2 điểm</option>
+    </select>
+
+    <label>Đội giao banh đầu tiên</label>
+    <select id="firstServeTeam">
+        <option value="A">Đội A</option>
+        <option value="B">Đội B</option>
+    </select>
+
+    <button style="width:100%;margin-top:10px;background:#28a745"
+            onclick="startMatch()">BẮT ĐẦU TRẬN</button>
+</div>
+
+<div class="court">
+    <div class="half">
+        <div class="nvz"></div>
+        <div id="A-right" class="player teamA"></div>
+        <div id="A-left" class="player teamA"></div>
     </div>
-  </header>
-
-  <div class="layout">
-    <!-- LEFT -->
-    <div class="left">
-      <div class="teamBox teamA">
-        <div class="flex-between">
-          <div>
-            <div style="font-weight:900">Đội A</div>
-            <div class="small">Tên đội: <input id="teamAName" class="small" value="TEAM A"></div>
-          </div>
-          <div style="text-align:right">
-            <div class="small">Điểm</div>
-            <div id="scoreA" class="bigScore">0</div>
-          </div>
-        </div>
-        <div style="margin-top:8px">
-          <div class="small">VĐV (phải / trái)</div>
-          <input id="A_right_name" class="small" value="A - Phải" style="width:100%;margin-top:6px">
-          <input id="A_left_name"  class="small" value="A - Trái"  style="width:100%;margin-top:6px">
-        </div>
-      </div>
-
-      <div class="teamBox teamB">
-        <div class="flex-between">
-          <div>
-            <div style="font-weight:900">Đội B</div>
-            <div class="small">Tên đội: <input id="teamBName" class="small" value="TEAM B"></div>
-          </div>
-          <div style="text-align:right">
-            <div class="small">Điểm</div>
-            <div id="scoreB" class="bigScore">0</div>
-          </div>
-        </div>
-        <div style="margin-top:8px">
-          <div class="small">VĐV (phải / trái)</div>
-          <input id="B_right_name" class="small" value="B - Phải" style="width:100%;margin-top:6px">
-          <input id="B_left_name"  class="small" value="B - Trái"  style="width:100%;margin-top:6px">
-        </div>
-      </div>
-
-      <div style="margin-top:10px">
-        <div class="muted">Bảng chính (điểm đội đang giao - điểm đối phương - lượt giao hiện tại)</div>
-        <div class="board" style="margin-top:8px">
-          <div id="mainBoard" class="mainBoard">0 - 0 - 0</div>
-        </div>
-        <div style="margin-top:8px" class="muted">Ghi chú: đội giao đầu trận bắt đầu S=2 (ví dụ 0-0-2). Các quy tắc khác theo mô tả.</div>
-      </div>
+    <div class="half">
+        <div class="nvz"></div>
+        <div id="B-right" class="player teamB"></div>
+        <div id="B-left" class="player teamB"></div>
     </div>
+</div>
 
-    <!-- RIGHT -->
-    <div class="right">
-      <div class="flex-between">
-        <div style="font-weight:900">Sơ đồ sân (ngang)</div>
-        <div style="text-align:right">
-          <div class="small">Server hiện tại</div>
-          <div id="serverInfo" style="font-weight:900">-</div>
-        </div>
-      </div>
+<div class="scoreboard" id="mainScore">0 - 0 - 2</div>
 
-      <div class="courtWrap" style="margin-top:8px">
-        <div class="court" id="court">
-          <div class="kitchen top"></div>
-          <div class="net"></div>
-          <div class="kitchen bottom"></div>
-
-          <div class="side" id="sideB" style="align-items:center">
-            <div id="B_right" class="playerBox B">B - Phải</div>
-            <div id="B_left"  class="playerBox B">B - Trái</div>
-          </div>
-
-          <div class="side" id="sideA" style="align-items:center">
-            <div id="A_right" class="playerBox A">A - Phải</div>
-            <div id="A_left"  class="playerBox A">A - Trái</div>
-          </div>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:12px;justify-content:center;margin-top:12px">
-        <div style="text-align:center">
-          <div style="font-weight:900;color:var(--teamA)"><span id="teamALabel">Đội A</span></div>
-          <div style="margin-top:8px">
-            <button class="btn small" onclick="servePoint('A')">+ Điểm (A đang giao)</button>
-            <button class="btn small" onclick="receiverWins('A')">A thắng pha (nếu A là người nhận)</button>
-            <div style="margin-top:6px"><button class="btn small" onclick="decPoint('A')">−</button></div>
-          </div>
-        </div>
-
-        <div style="text-align:center">
-          <div style="font-weight:900;color:var(--teamB)"><span id="teamBLabel">Đội B</span></div>
-          <div style="margin-top:8px">
-            <button class="btn small" onclick="servePoint('B')">+ Điểm (B đang giao)</button>
-            <button class="btn small" onclick="receiverWins('B')">B thắng pha (nếu B là người nhận)</button>
-            <div style="margin-top:6px"><button class="btn small" onclick="decPoint('B')">−</button></div>
-          </div>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
-        <button class="btn" onclick="manualSideOut()">Side-out thủ công</button>
-        <button class="btn" onclick="showState()">Hiện trạng</button>
-      </div>
+<div class="team-controls">
+    <div class="team-box">
+        <h3 id="AnameBox">Team A</h3>
+        <button onclick="addPoint('A')">+ A</button>
+        <button class="minus" onclick="subPoint('A')">- A</button>
     </div>
-  </div>
+    <div class="team-box">
+        <h3 id="BnameBox">Team B</h3>
+        <button onclick="addPoint('B')">+ B</button>
+        <button class="minus" onclick="subPoint('B')">- B</button>
+    </div>
 </div>
 
 <script>
-/* ===== State ===== */
+/* ===== BIẾN TRẠNG THÁI ===== */
 let scoreA = 0, scoreB = 0;
-let servingTeam = null;     // 'A' or 'B' (team currently serving)
-let servingPlayer = 1;      // 1 = right, 2 = left
-let S = 0;                  // số lượt giao hiện tại của đội đang giao (1 hoặc 2)
-let initialServer = null;
-let matchOn = false;
+let servingTeam = "A";    // A hoặc B
+let serveNumber = 2;      // 1 hoặc 2
+let rightServer = { A: true, B: true }; // true=đứng phải, false=đứng trái
+let servedFirst = "";     // A hoặc B
 
-/* Helpers */
-const $ = id => document.getElementById(id);
+function startMatch() {
+    scoreA = scoreB = 0;
 
-function startMatch(){
-  // set names
-  $('A_right').textContent = $('A_right_name').value || 'A - Phải';
-  $('A_left').textContent  = $('A_left_name').value  || 'A - Trái';
-  $('B_right').textContent = $('B_right_name').value || 'B - Phải';
-  $('B_left').textContent  = $('B_left_name').value  || 'B - Trái';
+    servingTeam = document.getElementById("firstServeTeam").value;
+    servedFirst = servingTeam;
 
-  $('teamALabel').textContent = $('teamAName').value || 'Đội A';
-  $('teamBLabel').textContent = $('teamBName').value || 'Đội B';
+    serveNumber = 2; // đội giao đầu tiên luôn 2
 
-  initialServer = $('firstServe').value || 'A';
-  servingTeam = initialServer;
-  // theo thỏa thuận: đội giao đầu trận bắt đầu S = 2
-  S = 2;
-  servingPlayer = 1; // phải giao đầu
-  scoreA = 0; scoreB = 0;
-  matchOn = true;
-  updateAll();
-  alert('Trận bắt đầu. Đội ' + servingTeam + ' giao trước (S = 2). Bảng: ' + boardText());
+    document.getElementById("AnameBox").innerText = document.getElementById("teamAName").value;
+    document.getElementById("BnameBox").innerText = document.getElementById("teamBName").value;
+
+    updatePlayers();
+    updateBoard();
 }
 
-/* Build main board text: show points from perspective of serving team */
-function boardText(){
-  if(!matchOn) return `${scoreA} - ${scoreB} - ${S}`;
-  let sScore = (servingTeam === 'A') ? scoreA : scoreB;
-  let oScore = (servingTeam === 'A') ? scoreB : scoreA;
-  return `${sScore} - ${oScore} - ${S}`;
-}
+/* ===== HIỂN THỊ VĐV ===== */
+function updatePlayers() {
+    document.getElementById("A-right").innerText = document.getElementById("A1").value;
+    document.getElementById("A-left").innerText  = document.getElementById("A2").value;
+    document.getElementById("B-right").innerText = document.getElementById("B1").value;
+    document.getElementById("B-left").innerText  = document.getElementById("B2").value;
 
-/* Update UI visuals */
-function updateAll(){
-  $('scoreA').textContent = scoreA;
-  $('scoreB').textContent = scoreB;
-  $('mainBoard').textContent = boardText();
-  $('serverInfo').textContent = matchOn ? (`${servingTeam} — ${(servingPlayer===1)?'Phải':'Trái'}`) : '-';
+    document.querySelectorAll(".player").forEach(p => p.classList.remove("server"));
 
-  // update player labels (in case user edited mid-game)
-  $('A_right').textContent = $('A_right_name').value || 'A - Phải';
-  $('A_left').textContent  = $('A_left_name').value  || 'A - Trái';
-  $('B_right').textContent = $('B_right_name').value || 'B - Phải';
-  $('B_left').textContent  = $('B_left_name').value  || 'B - Trái';
-
-  // clear server class
-  ['A_right','A_left','B_right','B_left'].forEach(id => $(id).classList.remove('server'));
-
-  // add server highlight
-  if(matchOn){
-    const id = (servingTeam === 'A' ? 'A_' : 'B_') + (servingPlayer === 1 ? 'right' : 'left');
-    $(id).classList.add('server');
-  }
-}
-
-/* Serve team scores a point (only valid if team === servingTeam) */
-function servePoint(team){
-  if(!matchOn){ alert('Bấm BẮT ĐẦU trước khi ghi điểm.'); return; }
-  if(team !== servingTeam){ alert('Chỉ đội đang giao mới được cộng điểm. Nếu đội kia thắng pha khi là người nhận, bấm "Receiver wins".'); return; }
-
-  // team gets a point
-  if(team === 'A') scoreA++; else scoreB++;
-
-  // server switches side (right <-> left)
-  servingPlayer = (servingPlayer === 1) ? 2 : 1;
-
-  updateAll();
-  checkWin();
-}
-
-/* When receiving team wins rally (does NOT get point, but affects serve rights)
-   Rules implemented to match examples you provided:
-   - If opponent (current servingTeam) loses the rally:
-     - If the new team (winner) just gained serve via side-out, they start with S = 1.
-     - If the team currently serving had S = 2 and lost -> side-out to opponent, opponent starts with S = 1.
-     - If the serving team had S = 1 and lost -> we increase S to 2 for the same team (as per example sequence),
-       i.e., the losing serving team moves from S=1 -> S=2 (still serving) — this is the specialized behavior to match your examples.
-   This logic reproduces sequences like:
-     0-0-2 (A serves) -> A scores -> 1-0-2
-     -> B wins rally -> side-out to B with S=1 => 0-1-1
-     -> B loses (while S=1) -> B remains server but S becomes 2 => 0-1-2
-     -> B loses again (S=2) -> side-out to A start with S=1 => 1-0-1
-*/
-function receiverWins(winnerTeam){
-  if(!matchOn){ alert('Bắt đầu trận trước (BẮT ĐẦU).'); return; }
-  if(winnerTeam === servingTeam){
-    alert('Đội này đang giao. Nếu họ ghi điểm, bấm + Điểm (Serve).');
-    return;
-  }
-
-  // current serving team lost the rally
-  // Decide transition
-  // If current serving team had S == 2 => side-out to winnerTeam, winnerTeam starts with S=1
-  if(S === 2){
-    servingTeam = winnerTeam;
-    S = 1;
-    servingPlayer = 1; // right serves first when gaining serve
-  } else if(S === 1){
-    // If serving team had S==1 and lost -> increase S to 2 for the same (current) team (special rule to match your example)
-    // i.e., the serving team remains serving but S becomes 2
-    // However since winnerTeam != servingTeam, interpreting your example: after winnerTeam wins and becomes server with S=1,
-    // then if that new server "loses" next rally, their S goes from 1 -> 2 (they still remain server).
-    // To model exactly the example timeline, we interpret as:
-    // - When winnerTeam wins, we set servingTeam = winnerTeam and S=1 (handled above only when previous S==2).
-    // But if S was 1 (meaning previous server had S=1) and they lost, we do:
-    //   servingTeam stays as winnerTeam (already set if changed) and then S becomes 2.
-    // For simplicity and to follow the exact example sequence, apply:
-    servingTeam = winnerTeam;
-    // If winnerTeam just gained serve previously with S==1 and now loses, we'll set S=2
-    S = 2;
-    servingPlayer = 1;
-  } else {
-    // fallback
-    servingTeam = winnerTeam;
-    S = 1;
-    servingPlayer = 1;
-  }
-
-  updateAll();
-}
-
-/* Manual side-out (for correction) */
-function manualSideOut(){
-  if(!matchOn){ alert('Bắt đầu trận trước (BẮT ĐẦU).'); return; }
-  servingTeam = (servingTeam === 'A') ? 'B' : 'A';
-  S = 1;
-  servingPlayer = 1;
-  updateAll();
-}
-
-/* Decrease point manually */
-function decPoint(team){
-  if(team === 'A' && scoreA>0) scoreA--;
-  if(team === 'B' && scoreB>0) scoreB--;
-  updateAll();
-}
-
-/* Check win condition */
-function checkWin(){
-  const pt = $('pointType').value; // '11' or '15'
-  const winType = $('winType').value; // 'touch' or 'by2'
-  const cap = (pt === '11') ? 15 : 21;
-  const target = (winType === 'touch') ? Number(pt) : Number(cap);
-
-  if(scoreA >= target || scoreB >= target){
-    if(winType === 'by2'){
-      if(Math.abs(scoreA - scoreB) >= 2 || scoreA >= cap || scoreB >= cap){
-        announceWinner();
-      }
+    if (servingTeam === "A") {
+        document.getElementById(rightServer.A ? "A-right" : "A-left").classList.add("server");
     } else {
-      announceWinner();
+        document.getElementById(rightServer.B ? "B-right" : "B-left").classList.add("server");
     }
-  }
 }
 
-function announceWinner(){
-  const winnerName = (scoreA > scoreB) ? ($('teamAName').value || 'Đội A') : ($('teamBName').value || 'Đội B');
-  alert('🎉 ' + winnerName + ' thắng trận! 🎉');
-  matchOn = false;
-  updateAll();
+/* ===== CẬP NHẬT BẢNG CHÍNH ===== */
+function updateBoard() {
+    let X = servingTeam === "A" ? scoreA : scoreB;
+    let Y = servingTeam === "A" ? scoreB : scoreA;
+    document.getElementById("mainScore").innerText = `${X} - ${Y} - ${serveNumber}`;
+    updatePlayers();
 }
 
-function showState(){
-  alert(
-    `State:
-matchOn: ${matchOn}
-servingTeam: ${servingTeam}
-servingPlayer: ${servingPlayer===1 ? 'Phải' : 'Trái'}
-S (lượt đang giao): ${S}
-scoreA - scoreB: ${scoreA} - ${scoreB}`
-  );
+/* ===== THÊM ĐIỂM ===== */
+function addPoint(team) {
+    if (team !== servingTeam) {
+        lossOfServe();
+        return;
+    }
+
+    if (team === "A") scoreA++;
+    else scoreB++;
+
+    /* Người giao đổi vị trí */
+    rightServer[team] = !rightServer[team];
+
+    checkWin();
+    updateBoard();
 }
 
-/* init */
-updateAll();
+/* ===== TRỪ ĐIỂM (không ảnh hưởng luật giao) ===== */
+function subPoint(team) {
+    if (team === "A" && scoreA > 0) scoreA--;
+    if (team === "B" && scoreB > 0) scoreB--;
+    updateBoard();
+}
+
+/* ===== MẤT QUYỀN GIAO ===== */
+function lossOfServe() {
+    if (servingTeam === servedFirst) {
+        serveNumber = 1;
+        servedFirst = ""; // từ đây trở đi dùng hệ 1–2 bình thường
+    } else if (serveNumber === 1) {
+        serveNumber = 2;
+    } else {
+        servingTeam = servingTeam === "A" ? "B" : "A";
+        serveNumber = 1;
+    }
+    updateBoard();
+}
+
+/* ===== KIỂM TRA THẮNG ===== */
+function checkWin() {
+    let target = parseInt(document.getElementById("target").value);
+    let mode = document.getElementById("mode").value;
+
+    let winScore = target;
+    if (mode === "winBy2") {
+        winScore = target === 11 ? 15 : 21;
+    }
+
+    if (scoreA >= winScore || scoreB >= winScore) {
+        alert("Đội thắng: " + (scoreA > scoreB ?
+              document.getElementById("teamAName").value :
+              document.getElementById("teamBName").value));
+    }
+}
 </script>
+
 </body>
 </html>
