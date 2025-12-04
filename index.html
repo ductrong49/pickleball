@@ -10,7 +10,7 @@
     body{margin:0;background:linear-gradient(180deg,#eef6ff 0%, #fbfdff 100%);color:#0f172a}
     header{padding:18px 12px;text-align:center}
     h1{margin:0;font-size:20px;color:var(--accent);text-shadow:0 2px 6px rgba(11,116,218,0.25);letter-spacing:1px}
-    .container{max-width:1000px;margin:18px auto;padding:16px}
+    .container{max-width:1100px;margin:18px auto;padding:16px}
     .controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
     .card{background:var(--card);border-radius:10px;padding:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06);flex:1;min-width:240px}
     label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
@@ -27,26 +27,18 @@
     /* Court horizontal layout */
     .court{margin-top:18px;display:flex;gap:12px;align-items:center}
     .court-visual{flex:1;background:linear-gradient(180deg,#e6f2ff,#f8fbff);border-radius:10px;padding:14px;border:1px solid rgba(11,116,218,0.06)}
-    .court-grid{position:relative;height:360px;background:#eaf6ff;border-radius:8px;margin:0 auto;max-width:880px;box-shadow:inset 0 2px 0 rgba(255,255,255,0.6);overflow:hidden}
-
-    /* Net vertical in center */
-    .net{position:absolute;left:50%;top:2%;bottom:2%;width:6px;background:linear-gradient(180deg,#333, #888);transform:translateX(-50%);opacity:0.9;border-radius:3px}
-
-    /* Kitchen zones (non-volley) as rectangles adjacent to net */
-    .kitchen-left{position:absolute;left:35%;top:5%;bottom:5%;width:15%;background:var(--kitchen);opacity:0.9;border-radius:6px;display:flex;align-items:center;justify-content:center}
-    .kitchen-right{position:absolute;right:35%;top:5%;bottom:5%;width:15%;background:var(--kitchen);opacity:0.9;border-radius:6px;display:flex;align-items:center;justify-content:center}
-    .kitchen-label{font-size:12px;color:#6b4a00;font-weight:600}
-
-    .position{position:absolute;width:18%;height:30%;display:flex;align-items:center;justify-content:center;border-radius:8px}
-    .pos-box{background:rgba(255,255,255,0.95);width:92%;height:80%;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;padding:6px;border:1px solid rgba(15,23,42,0.05)}
+    .court-grid{position:relative;height:380px;background:#eaf6ff;border-radius:8px;margin:0 auto;max-width:980px;box-shadow:inset 0 2px 0 rgba(255,255,255,0.6);overflow:hidden}
+    .net{position:absolute;left:50%;top:4%;bottom:4%;width:6px;background:repeating-linear-gradient(180deg,#444 0 4px,#ddd 4px 8px);transform:translateX(-50%);opacity:0.95;border-radius:3px}
+    .kitchen-left{position:absolute;left:40%;top:8%;bottom:8%;width:10%;background:var(--kitchen);opacity:0.95;border-radius:6px;display:flex;align-items:center;justify-content:center}
+    .kitchen-right{position:absolute;right:40%;top:8%;bottom:8%;width:10%;background:var(--kitchen);opacity:0.95;border-radius:6px;display:flex;align-items:center;justify-content:center}
+    .kitchen-label{font-size:12px;color:#6b4a00;font-weight:700}
+    .position{position:absolute;width:18%;height:28%;display:flex;align-items:center;justify-content:center;border-radius:8px}
+    .pos-box{background:rgba(255,255,255,0.95);width:92%;height:84%;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;padding:6px;border:1px solid rgba(15,23,42,0.05)}
     .pos-label{font-size:12px;color:var(--muted)}
     .player-name{font-weight:700}
-    .server{box-shadow:0 0 0 4px rgba(11,116,218,0.12);border:2px solid var(--accent)}
-
-    /* Team color accents */
-    .teamA-accent{background:linear-gradient(180deg, rgba(255,122,122,0.08), rgba(255,122,122,0.02));border:1px solid rgba(255,122,122,0.12)}
-    .teamB-accent{background:linear-gradient(180deg, rgba(96,165,250,0.08), rgba(96,165,250,0.02));border:1px solid rgba(96,165,250,0.12)}
-
+    .server{box-shadow:0 0 0 6px rgba(11,116,218,0.12);border:2px solid var(--accent)}
+    .teamA-accent{background:linear-gradient(180deg, rgba(255,122,122,0.06), rgba(255,122,122,0.02));border:1px solid rgba(255,122,122,0.08)}
+    .teamB-accent{background:linear-gradient(180deg, rgba(96,165,250,0.06), rgba(96,165,250,0.02));border:1px solid rgba(96,165,250,0.08)}
     .controls-small{display:flex;gap:8px;align-items:center}
     .tiny{font-size:12px;padding:6px 8px}
     .footer{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
@@ -72,12 +64,19 @@
           <label><input type="radio" name="winMode" value="touch"> Chạm điểm</label>
         </div>
         <div style="height:8px"></div>
+        <label>Chọn đội giao đầu</label>
+        <select id="startingTeam">
+          <option value="A">Đội A</option>
+          <option value="B">Đội B</option>
+        </select>
+        <div style="height:8px"></div>
         <label>Hiện trạng giao</label>
-        <div class="muted">Server hiện tại: <span id="serverStatus">Team A - A_LEFT (A1)</span></div>
+        <div class="muted">Server hiện tại: <span id="serverStatus">Team A - RIGHT (A1)</span></div>
         <div style="height:8px"></div>
         <div style="display:flex;gap:8px;margin-top:8px">
           <button id="resetBtn" class="btn-secondary tiny">Reset</button>
-          <button id="swapSides" class="btn-secondary tiny">Đổi đội</button>
+          <button id="undoBtn" class="btn-secondary tiny">Hoàn tác</button>
+          <button id="copyBtn" class="btn-secondary tiny">Sao chép trạng thái</button>
         </div>
       </div>
 
@@ -85,31 +84,28 @@
         <label>Tên vận động viên (gắn vị trí trên sân)</label>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
           <div>
-            <label class="muted">Đội A - Vị trí Trên</label>
-            <input id="a_top" type="text" value="A1" />
+            <label class="muted">Đội A - Vị trí Right (giao đầu)</label>
+            <input id="a_right" type="text" value="A1" />
           </div>
           <div>
-            <label class="muted">Đội A - Vị trí Dưới</label>
-            <input id="a_bottom" type="text" value="A2" />
+            <label class="muted">Đội A - Vị trí Left</label>
+            <input id="a_left" type="text" value="A2" />
           </div>
           <div>
-            <label class="muted">Đội B - Vị trí Trên</label>
-            <input id="b_top" type="text" value="B1" />
+            <label class="muted">Đội B - Vị trí Right (giao đầu)</label>
+            <input id="b_right" type="text" value="B1" />
           </div>
           <div>
-            <label class="muted">Đội B - Vị trí Dưới</label>
-            <input id="b_bottom" type="text" value="B2" />
+            <label class="muted">Đội B - Vị trí Left</label>
+            <input id="b_left" type="text" value="B2" />
           </div>
         </div>
       </div>
 
       <div class="card" style="min-width:240px">
-        <label>Ghi chú & nút nhanh</label>
-        <div class="muted" style="margin-bottom:8px">- Sân xoay ngang: Team A bên trái, Team B bên phải. Có lưới ở giữa và khu vực 'kitchen' (non-volley) gần lưới. Giao nội bộ: 2 lượt mỗi đội. Server sẽ đổi vị trí nội bộ sau mỗi điểm khi cùng đội đang giao.</div>
-        <div style="display:flex;gap:8px">
-          <button id="undo" class="btn-secondary tiny">Hoàn tác</button>
-          <button id="saveState" class="btn-secondary tiny">Sao chép trạng thái</button>
-        </div>
+        <label>Ghi chú</label>
+        <div class="muted" style="margin-bottom:8px">Chỉ đội đang giao mới được ghi điểm. Nếu đội không giao thắng pha bóng, họ KHÔNG được điểm — thay vào đó đội giao sẽ mất quyền giao (side-out) hoặc chuyển sang người còn lại trong đội nếu vẫn còn lượt nội bộ.</div>
+        <div class="muted">Sử dụng nút + của mỗi đội để báo đội đó thắng pha bóng (rally). Hệ thống sẽ áp dụng luật side-out tự động.</div>
       </div>
     </div>
 
@@ -118,7 +114,7 @@
         <h2>ĐỘI A</h2>
         <div class="points" id="scoreA">0</div>
         <div class="pt-controls">
-          <button id="aPlus">+1</button>
+          <button id="aPlus">Đội A thắng pha</button>
           <button id="aMinus" class="btn-secondary">-1</button>
         </div>
         <div style="height:8px"></div>
@@ -129,7 +125,7 @@
         <h2>ĐỘI B</h2>
         <div class="points" id="scoreB">0</div>
         <div class="pt-controls">
-          <button id="bPlus">+1</button>
+          <button id="bPlus">Đội B thắng pha</button>
           <button id="bMinus" class="btn-secondary">-1</button>
         </div>
         <div style="height:8px"></div>
@@ -145,84 +141,159 @@
           <div class="kitchen-left"><div class="kitchen-label">KITCHEN</div></div>
           <div class="kitchen-right"><div class="kitchen-label">KITCHEN</div></div>
 
-          <!-- Team A (left side) -->
-          <div class="position" id="pos-a-top" style="left:4%;top:12%;">
-            <div class="pos-box" id="box-a-top"><div class="pos-label">A - TOP</div><div class="player-name" id="name-a-top">A1</div></div>
+          <!-- Team A (left) -->
+          <div class="position" id="pos-a-right" style="left:6%;bottom:12%;">
+            <div class="pos-box" id="box-a-right"><div class="pos-label">A - RIGHT</div><div class="player-name" id="name-a-right">A1</div></div>
           </div>
-          <div class="position" id="pos-a-bottom" style="left:4%;bottom:12%;">
-            <div class="pos-box" id="box-a-bottom"><div class="pos-label">A - BOTTOM</div><div class="player-name" id="name-a-bottom">A2</div></div>
+          <div class="position" id="pos-a-left" style="left:6%;top:12%;">
+            <div class="pos-box" id="box-a-left"><div class="pos-label">A - LEFT</div><div class="player-name" id="name-a-left">A2</div></div>
           </div>
 
-          <!-- Team B (right side) -->
-          <div class="position" id="pos-b-top" style="right:4%;top:12%;">
-            <div class="pos-box" id="box-b-top"><div class="pos-label">B - TOP</div><div class="player-name" id="name-b-top">B1</div></div>
+          <!-- Team B (right) -->
+          <div class="position" id="pos-b-right" style="right:6%;top:12%;">
+            <div class="pos-box" id="box-b-right"><div class="pos-label">B - RIGHT</div><div class="player-name" id="name-b-right">B1</div></div>
           </div>
-          <div class="position" id="pos-b-bottom" style="right:4%;bottom:12%;">
-            <div class="pos-box" id="box-b-bottom"><div class="pos-label">B - BOTTOM</div><div class="player-name" id="name-b-bottom">B2</div></div>
+          <div class="position" id="pos-b-left" style="right:6%;bottom:12%;">
+            <div class="pos-box" id="box-b-left"><div class="pos-label">B - LEFT</div><div class="player-name" id="name-b-left">B2</div></div>
           </div>
 
         </div>
       </div>
     </div>
 
-    <div class="footer">Chạy trên trình duyệt - không lưu dữ liệu. Copy/Share trạng thái bằng nút 'Sao chép trạng thái'.</div>
+    <div class="footer">Chạy trên trình duyệt - không lưu dữ liệu. Sao chép trạng thái bằng nút 'Sao chép trạng thái'.</div>
   </div>
 
 <script>
 (function(){
-  // State
-  const state = { scoreA:0, scoreB:0, serveSide:'A', serverIndex:0, serverCount:1, history: [] };
+  // Controller state
+  const state = {
+    scoreA:0, scoreB:0,
+    serveSide:null,       // 'A' or 'B' — which team currently has serve
+    serverIndex:0,       // 0 = RIGHT, 1 = LEFT — who will serve next for serving team
+    initialServerTeam:null, // team chosen at match start
+    initialPhase:true,   // initial team's special single-serve-on-first-turn
+    serviceLives:0,      // how many internal serves remaining for current serving team (1 or 2)
+    history:[]
+  };
 
   // Elements
-  const el = id=>document.getElementById(id);
-  const scoreA = el('scoreA'), scoreB = el('scoreB');
-  const aPlus = el('aPlus'), aMinus = el('aMinus'), bPlus = el('bPlus'), bMinus = el('bMinus');
-  const serverStatus = el('serverStatus');
-  const aServeCount = el('aServeCount'), bServeCount = el('bServeCount');
-  const inputs = { a_top:el('a_top'), a_bottom:el('a_bottom'), b_top:el('b_top'), b_bottom:el('b_bottom') };
-  const names = { 'a_top':el('name-a-top'),'a_bottom':el('name-a-bottom'),'b_top':el('name-b-top'),'b_bottom':el('name-b-bottom') };
-  const boxes = { 'a_top':el('box-a-top'),'a_bottom':el('box-a-bottom'),'b_top':el('box-b-top'),'b_bottom':el('box-b-bottom') };
-  const targetSelect = el('targetSelect');
-  const resetBtn = el('resetBtn');
-  const winModeRadios = document.getElementsByName('winMode');
-  const undoBtn = el('undo');
-  const copyBtn = el('saveState');
-  const swapSidesBtn = el('swapSides');
+  const $ = id => document.getElementById(id);
+  const elems = {
+    scoreA: $('scoreA'), scoreB: $('scoreB'),
+    aPlus: $('aPlus'), aMinus: $('aMinus'), bPlus: $('bPlus'), bMinus: $('bMinus'),
+    serverStatus: $('serverStatus'), aServeCount: $('aServeCount'), bServeCount: $('bServeCount'),
+    inputs: { a_right:$('a_right'), a_left:$('a_left'), b_right:$('b_right'), b_left:$('b_left') },
+    names: { 'a_right':$('name-a-right'),'a_left':$('name-a-left'),'b_right':$('name-b-right'),'b_left':$('name-b-left') },
+    boxes: { 'a_right':$('box-a-right'),'a_left':$('box-a-left'),'b_right':$('box-b-right'),'b_left':$('box-b-left') },
+    startingTeam: $('startingTeam'), targetSelect: $('targetSelect'), undoBtn: $('undoBtn'), resetBtn: $('resetBtn'), copyBtn: $('copyBtn')
+  };
 
-  function pushHistory(){ state.history.push(JSON.stringify({scoreA:state.scoreA,scoreB:state.scoreB,serveSide:state.serveSide,serverIndex:state.serverIndex,serverCount:state.serverCount})); if(state.history.length>80) state.history.shift(); }
-  function undo(){ if(!state.history.length) return; const raw=state.history.pop(); const h=JSON.parse(raw); state.scoreA=h.scoreA; state.scoreB=h.scoreB; state.serveSide=h.serveSide; state.serverIndex=h.serverIndex; state.serverCount=h.serverCount; render(); }
-  function getWinMode(){ return Array.from(winModeRadios).find(r=>r.checked).value; }
-  function getTarget(){ return Number(targetSelect.value); }
-  function capFor(target, mode){ if(mode==='winBy2'){ return target===11?15:21; } return target; }
+  // Helpers
+  function pushHistory(){ state.history.push(JSON.stringify(state)); if(state.history.length>200) state.history.shift(); }
+  function undo(){ if(!state.history.length) return; const h = JSON.parse(state.history.pop()); Object.assign(state,h); render(); }
+  function capFor(target, mode){ if(mode==='winBy2') return target===11?15:21; return target; }
+  function getWinMode(){ return Array.from(document.getElementsByName('winMode')).find(r=>r.checked).value; }
+  function getTarget(){ return Number(elems.targetSelect.value); }
 
-  function checkGameEnd(){ const target=getTarget(); const mode=getWinMode(); const cap=capFor(target,mode);
-    if(mode==='touch'){ if(state.scoreA>=target && state.scoreA>state.scoreB) return 'A'; if(state.scoreB>=target && state.scoreB>state.scoreA) return 'B'; return null; }
-    if(state.scoreA>=target || state.scoreB>=target){ if(Math.abs(state.scoreA-state.scoreB)>=2){ if(state.scoreA>state.scoreB && state.scoreA<=cap) return 'A'; if(state.scoreB>state.scoreA && state.scoreB<=cap) return 'B'; }
-      if(state.scoreA>=cap || state.scoreB>=cap){ if(state.scoreA>state.scoreB) return 'A'; if(state.scoreB>state.scoreA) return 'B'; } }
+  // Initialize/Reset
+  function init(){ state.scoreA=0; state.scoreB=0; state.initialServerTeam = elems.startingTeam.value; state.initialPhase = true; state.serveSide = state.initialServerTeam; state.serverIndex = 0; state.serviceLives = 1; state.history = []; render(); }
+
+  // Swap visual positions for a team (RIGHT <-> LEFT)
+  function swapPositions(team){ if(team==='A'){ const t = elems.inputs.a_right.value; elems.inputs.a_right.value = elems.inputs.a_left.value; elems.inputs.a_left.value = t; } else { const t = elems.inputs.b_right.value; elems.inputs.b_right.value = elems.inputs.b_left.value; elems.inputs.b_left.value = t; } }
+
+  // Update UI
+  function render(){ elems.scoreA.textContent = state.scoreA; elems.scoreB.textContent = state.scoreB;
+    elems.names['a_right'].textContent = elems.inputs.a_right.value || 'A1';
+    elems.names['a_left'].textContent = elems.inputs.a_left.value || 'A2';
+    elems.names['b_right'].textContent = elems.inputs.b_right.value || 'B1';
+    elems.names['b_left'].textContent = elems.inputs.b_left.value || 'B2';
+
+    const side = state.serveSide || state.initialServerTeam || 'A';
+    const key = side==='A' ? (state.serverIndex===0? 'a_right':'a_left') : (state.serverIndex===0? 'b_right':'b_left');
+    elems.serverStatus.textContent = `Team ${side} - ${key.toUpperCase()} (${elems.inputs[key].value})`;
+
+    // show serve lives for each team
+    elems.aServeCount.textContent = state.serveSide==='A' ? state.serviceLives : 0;
+    elems.bServeCount.textContent = state.serveSide==='B' ? state.serviceLives : 0;
+
+    // highlight server
+    Object.values(elems.boxes).forEach(b=>b.classList.remove('server'));
+    elems.boxes[key].classList.add('server');
+
+    const winner = checkGameEnd();
+    if(winner){ setTimeout(()=>alert('Kết thúc trận: Đội ' + winner + ' thắng!'),50); }
+  }
+
+  // Check end conditions (touch or winBy2 with cap)
+  function checkGameEnd(){ const target = getTarget(); const mode = getWinMode(); const cap = capFor(target, mode);
+    if(mode==='touch'){
+      if(state.scoreA>=target && state.scoreA>state.scoreB) return 'A';
+      if(state.scoreB>=target && state.scoreB>state.scoreA) return 'B';
+      return null;
+    }
+    if(state.scoreA>=target || state.scoreB>=target){
+      if(Math.abs(state.scoreA-state.scoreB)>=2){ if(state.scoreA>state.scoreB && state.scoreA<=cap) return 'A'; if(state.scoreB>state.scoreA && state.scoreB<=cap) return 'B'; }
+      if(state.scoreA>=cap || state.scoreB>=cap){ if(state.scoreA>state.scoreB) return 'A'; if(state.scoreB>state.scoreA) return 'B'; }
+    }
     return null;
   }
 
-  function updateServerStatus(){ const side = state.serveSide; const playerKey = side==='A' ? (state.serverIndex===0? 'a_top':'a_bottom') : (state.serverIndex===0? 'b_top':'b_bottom'); serverStatus.textContent = `Team ${side} - ${playerKey.toUpperCase()} (${inputs[playerKey].value})`; aServeCount.textContent = state.serveSide==='A'? state.serverCount:0; bServeCount.textContent = state.serveSide==='B'? state.serverCount:0; Object.values(boxes).forEach(b=>b.classList.remove('server')); boxes[playerKey].classList.add('server'); }
+  // Main rally handler: call when a team wins the rally (button)
+  // Rules implemented:
+  // - If serving team wins rally => serving team scores +1, swap positions, server continues.
+  // - If serving team loses rally => decrement their serviceLives; if after decrement serviceLives>0 => same team keeps serve but serverIndex switches to partner (no point awarded to non-serving team). If serviceLives becomes 0 => side-out: serve passes to rally winner team; new serving team starts with serverIndex=0 (RIGHT) and serviceLives = (initialPhase && initialServerTeam==thatTeam)?1:2. Also if initialPhase team lost serve first time, initialPhase=false.
+  function handleRally(winner){ pushHistory(); // save state
+    // winner is 'A' or 'B'
+    if(state.serveSide===winner){
+      // serving team won -> +1 point, swap positions, server continues
+      if(winner==='A') state.scoreA++; else state.scoreB++;
+      swapPositions(winner);
+      // serverIndex stays the same (same person continues), serviceLives unchanged
+    } else {
+      // serving team lost the rally
+      // First, check serviceLives of serving team
+      if(state.serviceLives>1){
+        // serving team uses up one internal serve life and switches server to partner
+        state.serviceLives -= 1;
+        state.serverIndex = 1; // partner serves now
+        // rally winner DOES NOT score (side-out not yet)
+      } else {
+        // serving team had no internal serve left -> side-out to rally winner
+        // award no point to rally winner (only serving team can score)
+        // update initialPhase: if initial team lost serve while initialPhase true, end initialPhase
+        if(state.initialPhase && state.serveSide===state.initialServerTeam){ state.initialPhase = false; }
+        // change serve to winner
+        state.serveSide = winner;
+        state.serverIndex = 0; // RIGHT serves first when gaining serve
+        // assign serviceLives for new serving team
+        state.serviceLives = (state.initialPhase && state.initialServerTeam===winner) ? 1 : 2;
+      }
+    }
+    render();
+  }
 
-  function render(){ scoreA.textContent = state.scoreA; scoreB.textContent = state.scoreB; names['a_top'].textContent = inputs['a_top'].value || 'A1'; names['a_bottom'].textContent = inputs['a_bottom'].value || 'A2'; names['b_top'].textContent = inputs['b_top'].value || 'B1'; names['b_bottom'].textContent = inputs['b_bottom'].value || 'B2'; updateServerStatus(); const winner = checkGameEnd(); if(winner){ setTimeout(()=>{ alert('Kết thúc trận: Đội ' + winner + ' thắng!'); },50); } }
+  // manual decrement / increment points (for corrections)
+  function decPoint(team){ pushHistory(); if(team==='A') state.scoreA = Math.max(0,state.scoreA-1); else state.scoreB = Math.max(0,state.scoreB-1); render(); }
 
-  function addPoint(team){ pushHistory(); if(team==='A'){ state.scoreA++; if(state.serveSide==='A'){ state.serverIndex = 1 - state.serverIndex; state.serverCount = state.serverCount%2 + 1; } else { state.serveSide='A'; state.serverIndex=0; state.serverCount=1; } } else { state.scoreB++; if(state.serveSide==='B'){ state.serverIndex = 1 - state.serverIndex; state.serverCount = state.serverCount%2 + 1; } else { state.serveSide='B'; state.serverIndex=0; state.serverCount=1; } } render(); }
-  function subPoint(team){ pushHistory(); if(team==='A') state.scoreA = Math.max(0, state.scoreA-1); else state.scoreB = Math.max(0, state.scoreB-1); render(); }
+  // Wiring UI
+  elems.aPlus.addEventListener('click',()=>handleRally('A'));
+  elems.bPlus.addEventListener('click',()=>handleRally('B'));
+  elems.aMinus.addEventListener('click',()=>decPoint('A'));
+  elems.bMinus.addEventListener('click',()=>decPoint('B'));
+  elems.undoBtn.addEventListener('click',undo);
+  elems.resetBtn.addEventListener('click',()=>{ if(!confirm('Reset toàn bộ trạng thái?')) return; init(); });
+  elems.copyBtn.addEventListener('click',async ()=>{ const payload = { scoreA: state.scoreA, scoreB: state.scoreB, serveSide: state.serveSide, serverIndex: state.serverIndex, serviceLives: state.serviceLives, initialServerTeam: state.initialServerTeam, a_right: elems.inputs.a_right.value, a_left: elems.inputs.a_left.value, b_right: elems.inputs.b_right.value, b_left: elems.inputs.b_left.value, target: elems.targetSelect.value, winMode: getWinMode() }; try{ await navigator.clipboard.writeText(JSON.stringify(payload)); alert('Đã sao chép trạng thái (JSON) vào clipboard.'); } catch(e){ prompt('Copy thủ công (Ctrl+C):', JSON.stringify(payload)); } });
 
-  function swapSides(){ pushHistory(); // swap names and scores
-    const tmpAt = inputs.a_top.value; inputs.a_top.value = inputs.b_top.value; inputs.b_top.value = tmpAt;
-    const tmpAb = inputs.a_bottom.value; inputs.a_bottom.value = inputs.b_bottom.value; inputs.b_bottom.value = tmpAb;
-    const tmpScore = state.scoreA; state.scoreA = state.scoreB; state.scoreB = tmpScore; state.serveSide = state.serveSide==='A'?'B':'A'; render(); }
+  // starting team change
+  elems.startingTeam.addEventListener('change',()=>{ init(); });
+  // update UI when names change
+  Object.values(elems.inputs).forEach(i=>i.addEventListener('input',render));
+  elems.targetSelect.addEventListener('change',render);
+  document.getElementsByName('winMode').forEach(r=>r.addEventListener('change',render));
 
-  async function copyState(){ const payload = { scoreA: state.scoreA, scoreB: state.scoreB, serveSide: state.serveSide, serverIndex: state.serverIndex, a_top: inputs.a_top.value, a_bottom: inputs.a_bottom.value, b_top: inputs.b_top.value, b_bottom: inputs.b_bottom.value, target:getTarget(), mode:getWinMode() }; try{ await navigator.clipboard.writeText(JSON.stringify(payload)); alert('Đã sao chép trạng thái (JSON) vào clipboard.'); }catch(e){ prompt('Copy thủ công (Ctrl+C):', JSON.stringify(payload)); } }
-
-  // wiring
-  aPlus.addEventListener('click',()=>addPoint('A')); bPlus.addEventListener('click',()=>addPoint('B')); aMinus.addEventListener('click',()=>subPoint('A')); bMinus.addEventListener('click',()=>subPoint('B'));
-  resetBtn.addEventListener('click',()=>{ if(!confirm('Reset toàn bộ trạng thái?')) return; pushHistory(); state.scoreA=0; state.scoreB=0; state.serveSide='A'; state.serverIndex=0; state.serverCount=1; state.history=[]; render(); });
-  undoBtn.addEventListener('click',undo); copyBtn.addEventListener('click',copyState); swapSidesBtn.addEventListener('click',swapSides);
-  Object.keys(inputs).forEach(k=>inputs[k].addEventListener('input',render));
-
-  render();
+  // init
+  init();
 })();
 </script>
 </body>
