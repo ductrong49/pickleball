@@ -296,5 +296,45 @@
   init();
 })();
 </script>
+  
+<!-- POPUP THẮNG CUỘC -->
+<div id="winnerPopup" class="popup hidden">
+  <div class="popup-content">
+    <h2 id="winnerText">Đội thắng!</h2>
+    <div id="finalScore"></div>
+    <button onclick="closePopup()">Đóng</button>
+  </div>
+</div>
+
+<script>
+function showWinner(team, scoreA, scoreB){
+  const popup = document.getElementById('winnerPopup');
+  document.getElementById('winnerText').innerText = team + ' THẮNG!';
+  document.getElementById('finalScore').innerHTML = `<h3>TỈ SỐ CUỐI:</h3>
+    <div class='scoreboard'>
+      <div>Đội A: ${scoreA}</div>
+      <div>Đội B: ${scoreB}</div>
+    </div>`;
+  popup.classList.remove('hidden');
+}
+
+function closePopup(){
+  document.getElementById('winnerPopup').classList.add('hidden');
+}
+</script>
+
+<style>
+.popup{
+  position: fixed;top:0;left:0;width:100%;height:100%;
+  background: rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;
+}
+.hidden{display:none;}
+.popup-content{
+  background:#fff;padding:20px 30px;border-radius:15px;text-align:center;
+  box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+.scoreboard div{font-size:22px;margin:5px 0;}
+</style>
+
 </body>
 </html>
